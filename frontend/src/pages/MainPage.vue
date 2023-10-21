@@ -38,6 +38,20 @@
             :visit="visit"
             :show-register-date="true"
           >
+            <div class="flex flex-center q-gutter-x-sm">
+              <p class="q-ma-none">Przed wizytą:</p>
+              <q-icon name="help_outline" size="lg" color="amber-6">
+                <q-popup-proxy
+                  transition-show="flip-up"
+                  transition-hide="flip-down"
+                >
+                  <q-banner class="bg-white text-black">
+                    {{ beforeVisit[visit.spiecialist] }}
+                  </q-banner>
+                </q-popup-proxy></q-icon
+              >
+            </div>
+            <q-separator style="width: 90%" />
             <q-btn
               class="q-my-sm"
               label="Zrezygnuj"
@@ -71,6 +85,8 @@
 import { useRouter } from 'vue-router'
 import { VisitStore } from 'src/stores/visitStore'
 import VisitExpansionItem from 'src/components/VisitExpansionItem.vue'
+import { ref } from 'vue'
+import { beforeVisit } from 'src/stores/beforeVisit'
 
 const visitStore = VisitStore()
 const router = useRouter()
