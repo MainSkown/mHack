@@ -15,7 +15,8 @@ class SQLiteConnector:
 
     def get_queues(self, user_id):
         
-        sql = (f'SELECT queue_id, locations.place_name, locations.city, locations.street, visit_date, visit_name, phone\
+        sql = (f'SELECT queue_id, locations.place_name, locations.city, locations.street, registration_date,\
+                    visit_date, visit_name, phone\
                     FROM queues LEFT JOIN locations on locations.place_name = queues.place_name\
                     WHERE user_id = "{user_id}"')
         res = self.con.execute(sql)
@@ -30,9 +31,10 @@ class SQLiteConnector:
                     'city': row[2],
                     'street': row[3],
                 },
-                'visit_date': row[4],
-                'visit_name': row[5],
-                'phone': row[6]
+                'registration_date': row[4],
+                'visit_date': row[5],
+                'visit_name': row[6],
+                'phone': row[7]
             })
 
         return {'status': 200, 'queues': visits}
@@ -43,7 +45,7 @@ class SQLiteConnector:
         self.con.commit()
         return {'status': 201, 'message': 'Added location successfully'}
 
-    def add_queue(self, queue_id, user_id, place_name, location, visit_date, visit_name, phone):
+    def add_queue(self, queue_id, user_id, place_name, location, registration_date, visit_date, visit_name, phone):
         city = location["city"]
         street = location["street"]
 
@@ -52,8 +54,10 @@ class SQLiteConnector:
         if not location_exists:
             self.add_location(place_name, city, street)
 
-        sql_queues = f"INSERT INTO queues VALUES ('{queue_id}', '{user_id}', '{place_name}', '{visit_date}',\
-                                                                                    '{visit_name}', '{phone}')"
+        sql_queues = f"INSERT INTO queues \
+        (queue_id, user_id, place_name, registration_date, visit_date, visit_name, phone) \
+        VALUES ('{queue_id}', '{user_id}', '{place_name}', '{registration_date}', '{visit_date}',\
+                                                                            '{visit_name}', '{phone}')"
         self.cur.execute(sql_queues)
         self.con.commit()
 
@@ -61,8 +65,8 @@ class SQLiteConnector:
 
 
 # tests
-# connector = SQLiteConnector().get_queues('696969669')
-# print(connector['queues'])
+connector = SQLiteConnector().get_queues('696969669')
+print(connector['queues'])
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)
@@ -72,9 +76,9 @@ class SQLiteConnector:
 
 # insert_test = SQLiteConnector().add_location('test_place_2', 'Testowo', 'Działa 78')
 # print(insert_test)
-
+#
 # queue_insert_test = (SQLiteConnector()
-#                      .add_queue('test_wizyta', '696969669',
-#                                 {'place_name': 'test_place_3', 'city': 'Test', 'street': 'Malinowa 12'},
-#                                 '2023-03-23', 'Porada', '696-696-696'))
+#                      .add_queue('wizyta_z_registration_date_test_2', '696969669', 'test_place_3',
+#                                 {'city': 'Test', 'street': 'Malinowa 12'},
+#                                 '2023-03-23', '2023-12-01', 'Porada', '696-696-696'))
 # print(queue_insert_test)
