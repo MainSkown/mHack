@@ -19,6 +19,7 @@ class ApiTranslation:
         self.disabled = ''
         self.elevator = ''
         self.returned_specialist = ''
+
     def get_request(self, request: dict):
 
         self.specialist = request.get('specialist', '')
@@ -40,7 +41,7 @@ class ApiTranslation:
 
     def constructing_filters(self):
         self.returned_specialist = self.specialist
-        if self.province: #must have
+        if self.province:  # must have
 
             self.province = "&province=" + self.province
 
@@ -92,7 +93,6 @@ class ApiTranslation:
         
         except Exception as e:
             print(f"An error occurred: {e}")
-
 
     def response_generator(self, json_data: list):
 
@@ -151,21 +151,18 @@ class ApiTranslation:
 
 
 
-d = {"specialist": "Dermatolog",
-    "province": "01",
-    "forChildren": False,
-    "provider": "",
-    "place": "",
-    "street": "",
-    "locality": "Wrocław",
-    "disabled": "",
-    "elevator": ""}
+# d = {"specialist": "Dermatolog",
+#     "province": "01",
+#     "forChildren": False,
+#     "provider": "",
+#     "place": "",
+#     "street": "",
+#     "locality": "Wrocław",
+#     "disabled": "",
+#     "elevator": ""}
 
-c = ApiTranslation()
-c.get_request(d)
-c.constructing_filters()
-c.generating_api_command()
-s=c.getting_json()
-print(s)
-
-
+# c = ApiTranslation()
+# c.get_request(d)
+# c.constructing_filters()
+# c.generating_api_command()
+# s = c.getting_json()
