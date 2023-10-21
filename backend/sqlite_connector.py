@@ -18,7 +18,6 @@ class SQLiteConnector:
         sql = (f'SELECT queue_id, locations.place_name, locations.city, locations.street, visit_date, visit_name, phone\
                     FROM queues LEFT JOIN locations on locations.place_name = queues.place_name\
                     WHERE user_id = "{user_id}"')
-        print(sql)
         res = self.con.execute(sql)
         
         visits = []
@@ -27,8 +26,10 @@ class SQLiteConnector:
             visits.append({
                 'queue_id': row[0],
                 'place_name': row[1],
-                'city': row[2],
-                'street': row[3],
+                'location': {
+                    'city': row[2],
+                    'street': row[3],
+                },
                 'visit_date': row[4],
                 'visit_name': row[5],
                 'phone': row[6]
@@ -42,8 +43,7 @@ class SQLiteConnector:
         self.con.commit()
         return {'status': 201, 'message': 'Added location successfully'}
 
-    def add_queue(self, queue_id, user_id, location, visit_date, visit_name, phone):
-        place_name = location["place_name"]
+    def add_queue(self, queue_id, user_id, place_name, location, visit_date, visit_name, phone):
         city = location["city"]
         street = location["street"]
 
@@ -62,7 +62,7 @@ class SQLiteConnector:
 
 # tests
 # connector = SQLiteConnector().get_queues('696969669')
-# print(connector)
+# print(connector['queues'])
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)

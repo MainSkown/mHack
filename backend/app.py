@@ -7,14 +7,14 @@ app = Flask(__name__)
 
 cors = CORS(app)
 
+
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
 
+
 @app.route('/search', methods=['GET', 'POST'])
-
 def search():
-
     search = ApiTranslation()
     request_data = request.get_json()
     search.get_request(request_data)
@@ -23,33 +23,35 @@ def search():
 
     return search.getting_json()
 
+
 @app.route('/user/registered', methods=['POST'])
-
 def users_registrations():
-
     request_data = request.get_json()
     print(request_data)
     user_database_conn = SQLiteConnector()
 
-    return user_database_conn.get_queues(request_data['user_id'])
+    try:
+        res = user_database_conn.get_queues(request_data['user_id'])
+        return res
+    except:
+        return {'status': 409}
+
 
 @app.route('/user/register', methods=['POST'])
-
 def user_register():
-
     save_request_data = request.get_json()
     user_database_conn = SQLiteConnector()
     try:
 
-        status = user_database_conn.add_queue(save_request_data['queue_id'],save_request_data['user_id'],
-                                 save_request_data['location'], save_request_data['visit_date'],
-                                 save_request_data['visit_name'], save_request_data['phone'])
-        
+        status = user_database_conn.add_queue(save_request_data['queue_id'], save_request_data['user_id'],
+                                              save_request_data['place_name'],
+                                              save_request_data['location'], save_request_data['visit_date'],
+                                              save_request_data['visit_name'], save_request_data['phone'])
     except:
-
         return {'status': 409}
-    
+
     return status
 
-if __name__ == '__main__':  
+
+if __name__ == '__main__':
     app.run()
