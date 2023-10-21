@@ -10,7 +10,7 @@ cors = CORS(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
-    return 'Hello World!'
+    return 'Hello World!', 200
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -33,7 +33,7 @@ def users_registrations():
         res = user_database_conn.get_queues(request_data['user_id'])
         return res
     except:
-        return {'status': 409}
+        return {'message': 'Conflict'}, 409
 
 
 @app.route('/user/register', methods=['POST'])
@@ -47,7 +47,7 @@ def user_register():
                                               save_request_data['registration_date'], save_request_data['visit_date'],
                                               save_request_data['visit_name'], save_request_data['phone'])
     except:
-        return {'status': 409}
+        return {'message': 'Conflict - visit with this queue_id already exists'}, 409
 
     return status
 
