@@ -2,8 +2,6 @@ import requests
 import urllib.parse
 
 
-class ApiTranslation():
-
 class ApiTranslation:
 
     def __init__(self) -> None:
