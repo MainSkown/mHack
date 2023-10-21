@@ -1,4 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
+from api_translation import ApiTranslation
+
 app = Flask(__name__)
 
 
@@ -6,12 +8,17 @@ app = Flask(__name__)
 def hello_world():  # put application's code here
     return 'Hello World!'
 
-@app.route('/test', methods=['POST'])
+@app.route('/search', methods=['GET'])
 
-def test():
+def search():
+
+    search = ApiTranslation()
     request_data = request.get_json()
-    print(request_data)
-    return "test"
+    search.get_request(request_data)
+    search.constructing_filters()
+    search.generating_api_command()
 
-if __name__ == '__main__':
+    return search.getting_json()
+
+if __name__ == '__main__':  
     app.run()
