@@ -35,7 +35,7 @@ Projekt ma służyć obywatelom, pomagając im znaleźć specjalistę, zarejestr
 
 ```js
 specialist: string;
-?province: int;
+?province: string;
 ?forChildren: boolean;
 ?provider: string;
 ?place: string
