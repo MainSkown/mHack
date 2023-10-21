@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from api_translation import ApiTranslation
 from sqlite_connector import SQLiteConnector
 from flask_cors import CORS
@@ -43,7 +43,8 @@ def user_register():
     try:
 
         status = user_database_conn.add_queue(save_request_data['queue_id'], save_request_data['user_id'],
-                                              save_request_data['place_name'], save_request_data['location'],
+                                              save_request_data['place_name'], save_request_data['specialist'],
+                                              save_request_data['location'],
                                               save_request_data['registration_date'], save_request_data['visit_date'],
                                               save_request_data['visit_name'], save_request_data['phone'])
     except:
