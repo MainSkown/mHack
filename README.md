@@ -67,6 +67,7 @@ phone: string;
 user_id: string;
 queue_id: string;
 place_name: string;
+specialist: string;
 location: {
   city: string;
   street: string;
@@ -102,6 +103,7 @@ user_id: string;
 queues: {
   queue_id: string;
   place_name: string;
+  specialist: string;
   location: {
     city: string;
     street: string;
