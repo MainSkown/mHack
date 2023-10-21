@@ -22,12 +22,18 @@
         />
         <h6 class="q-ma-none">Zarejestrowane wizyty</h6>
         <q-list
-          v-if="visitStore.getQueues.length > 0"
+          v-if="
+            visitStore.getQueues.filter(
+              (v) => new Date(v.registration_date) >= new Date()
+            ).length > 0
+          "
           style="width: 80%"
           class="q-gutter-y-sm"
         >
           <visit-expansion-item
-            v-for="(visit, index) in visitStore.getQueues"
+            v-for="(visit, index) in visitStore.getQueues.filter(
+              (v) => new Date(v.registration_date) >= new Date()
+            )"
             v-bind:key="index"
             :visit="visit"
             :show-register-date="true"
@@ -85,7 +91,7 @@ const buttons: {
   {
     label: 'Archiwum wizyt',
     onClick: () => {
-      router.push('/arhive')
+      router.push('/archive')
     },
     color: 'grey-7',
   },

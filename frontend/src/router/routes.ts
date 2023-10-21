@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router'
 import MainLayout from 'src/layouts/MainLayout.vue'
 import MainPage from 'src/pages/MainPage.vue'
 import VisitSearchPage from 'src/pages/VisitSearchPage.vue'
+import ArchivePage from 'src/pages/ArchivesPage.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -10,6 +11,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: MainPage },
       { path: '/visit_search', component: VisitSearchPage },
+      { path: '/archive', component: ArchivePage },
     ],
   },
 
