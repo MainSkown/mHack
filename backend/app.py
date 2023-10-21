@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from api_translation import ApiTranslation
 from sqlite_connector import SQLiteConnector
 from flask_cors import CORS
+from geo_location import GeoLocation
 
 app = Flask(__name__)
 
@@ -15,13 +16,34 @@ def hello_world():  # put application's code here
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    search = ApiTranslation()
+
+    radius_search = GeoLocation()
+    cities = radius_search.collect_data(radius_search.db_file_path)
+
+
+    
     request_data = request.get_json()
+    nearby_cities = radius_search.find_nearby_cities(request_data['locality'].lower(), 30, cities)
+
+    search = ApiTranslation()
     search.get_request(request_data)
+
     search.constructing_filters()
     search.generating_api_command()
+    full_dataset = search.getting_json()
 
-    return search.getting_json()
+    if nearby_cities:
+
+        for city in nearby_cities:
+
+            request_data['locality'] = city
+            search.get_request(request_data)
+            search.constructing_filters()
+            search.generating_api_command()
+            full_dataset += search.getting_json()
+    
+
+    return full_dataset
 
 
 @app.route('/user/registered', methods=['POST'])
