@@ -1,10 +1,16 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
+import MainLayout from 'src/layouts/MainLayout.vue'
+import MainPage from 'src/pages/MainPage.vue'
+import VisitSearchPage from 'src/pages/VisitSearchPage.vue'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    component: MainLayout,
+    children: [
+      { path: '', component: MainPage },
+      { path: '/visit_search', component: VisitSearchPage },
+    ],
   },
 
   // Always leave this as last one,
@@ -13,6 +19,6 @@ const routes: RouteRecordRaw[] = [
     path: '/:catchAll(.*)*',
     component: () => import('pages/ErrorNotFound.vue'),
   },
-];
+]
 
-export default routes;
+export default routes
