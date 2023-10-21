@@ -51,8 +51,6 @@ specialist: string;
 queue_id: string;
 place_name: string;
 location: {
-  city: string;
-  street: string;
   local_number: string;
   post_code: string;
 }
@@ -68,14 +66,14 @@ phone: string;
 ```js
 user_id: string;
 queue_id: string;
-  location: {
-    place_name: string;
-    city: string;
-    street: string;
-  }
-  visit_date: Date;
-  visit_name: string;
-  phone: string;
+place_name: string;
+location: {
+  city: string;
+  street: string;
+}
+visit_date: Date;
+visit_name: string;
+phone: string;
 ```
 
 #### Response:
@@ -103,8 +101,8 @@ user_id: string;
 ```js
 queues: {
   queue_id: string;
+  place_name: string;
   location: {
-    place_name: string;
     city: string;
     street: string;
   }
