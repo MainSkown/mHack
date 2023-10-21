@@ -52,3 +52,23 @@ class SQLiteConnector:
         self.con.commit()
 
         return {'status': 201, 'message': 'Registered Successfully'}
+
+
+# tests
+# connector = SQLiteConnector().get_queues('696969669')
+# print(connector)
+#
+# connector = SQLiteConnector().get_queues('nie_istnieje')
+# print(connector)
+
+# connector = SQLiteConnector().get_queues('2137')
+# print(connector)
+
+# insert_test = SQLiteConnector().add_location('test_place_2', 'Testowo', 'Działa 78')
+# print(insert_test)
+
+# queue_insert_test = (SQLiteConnector()
+#                      .add_queue('test_wizyta', '696969669',
+#                                 {'place_name': 'test_place_3', 'city': 'Test', 'street': 'Malinowa 12'},
+#                                 '2023-03-23', 'Porada', '696-696-696'))
+# print(queue_insert_test)
