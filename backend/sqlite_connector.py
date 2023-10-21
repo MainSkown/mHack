@@ -37,19 +37,19 @@ class SQLiteConnector:
                 'phone': row[7]
             })
 
-        return {'status': 200, 'queues': visits}
+        return {'queues': visits}, 200
 
     def add_location(self, place_name, city, street):
         sql = f"INSERT INTO locations VALUES ('{place_name}', '{city}', '{street}')"
         self.cur.execute(sql)
         self.con.commit()
-        return {'status': 201, 'message': 'Added location successfully'}
+        return {'message': 'Added location successfully'}, 201
 
     def add_queue(self, queue_id, user_id, place_name, location, registration_date, visit_date, visit_name, phone):
         sql_queue_id_check = f'SELECT * FROM queues WHERE queue_id="{queue_id}"'
         queue_id_exists = len(self.con.execute(sql_queue_id_check).fetchall())
         if queue_id_exists:
-            return {'status': 409, 'message': 'Conflict - visit with this queue_id already exists'}
+            return {'message': 'Conflict - visit with this queue_id already exists'}, 409
 
         city = location["city"]
         street = location["street"]
@@ -66,7 +66,7 @@ class SQLiteConnector:
         self.cur.execute(sql_queues)
         self.con.commit()
 
-        return {'status': 201, 'message': 'Registered Successfully'}
+        return {'message': 'Registered Successfully'}, 201
 
 
 # tests
