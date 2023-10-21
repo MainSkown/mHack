@@ -1,8 +1,9 @@
 import sqlite3
 import os
-db_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'databases', 'MLeKarz.db'))
-class SQLiteConnector:
+db_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'databases', 'mLekarz.db'))
 
+
+class SQLiteConnector:
 
     def __init__(self):
 
@@ -60,8 +61,8 @@ class SQLiteConnector:
 
 
 # tests
-connector = SQLiteConnector().get_queues('696969669')
-print(connector)
+# connector = SQLiteConnector().get_queues('696969669')
+# print(connector)
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)
