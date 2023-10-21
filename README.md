@@ -23,9 +23,9 @@ Projekt ma służyć obywatelom, pomagając im znaleźć specjalistę, zarejestr
 
 - **?** Podłączyć możliwość używania skierowań do lekarzy
 
-- **?** Email - Przypomnienie o wizycie
+- ~~**?** Email - Przypomnienie o wizycie~~
 
-- **?** Powiadomienia o szybszym terminie
+- ~~**?** Powiadomienia o szybszym terminie~~
 
 ## API
 
