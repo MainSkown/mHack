@@ -30,8 +30,26 @@ def users_registrations():
     request_data = request.get_json()
     print(request_data)
     user_database_conn = SQLiteConnector()
-    
+
     return user_database_conn.get_queues(request_data['user_id'])
+
+@app.route('/user/register', methods=['POST'])
+
+def user_register():
+
+    save_request_data = request.get_json()
+    user_database_conn = SQLiteConnector()
+    try:
+
+        status = user_database_conn.add_queue(save_request_data['queue_id'],save_request_data['user_id'],
+                                 save_request_data['location'], save_request_data['visit_date'],
+                                 save_request_data['visit_name'], save_request_data['phone'])
+        
+    except:
+
+        return {'status': 409}
+    
+    return status
 
 if __name__ == '__main__':  
     app.run()
