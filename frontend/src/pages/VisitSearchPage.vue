@@ -58,48 +58,21 @@
     <div v-if="visits.length > 0" style="width: 80%">
       <q-separator class="q-mt-sm q-mb-md" color="primary" />
       <q-list class="q-gutter-y-xs">
-        <q-expansion-item
-          class="bordered"
+        <visit-expansion-item
           v-for="visit in visits"
+          :visit="visit"
           v-bind:key="visit.queue_id"
         >
-          <!-- Label -->
-          <template v-slot:header>
-            <q-item class="column text-center">
-              <q-item-label class="text-bold">{{
-                visit.place_name
-              }}</q-item-label>
-              <q-separator />
-              <q-item-section>{{ visit.visit_name }} </q-item-section>
-            </q-item>
-          </template>
-          <q-separator />
-          <div class="column items-center text-center">
-            <p class="q-mt-xs q-mb-none">
-              {{ visit.location.city }}
-            </p>
-            <p class="q-mb-xs">
-              {{ visit.location.street }}
-            </p>
-            <q-separator style="width: 90%" />
-            <p class="q-my-xs">Numer telefonu: {{ visit.phone }}</p>
-            <q-separator style="width: 90%" />
-            <p class="q-my-xs">
-              Wizyta wolna od:
-              {{ new Date(visit.visit_date).toLocaleDateString('pl') }}
-            </p>
-            <q-separator style="width: 90%" />
-            <q-btn
-              class="q-my-sm"
-              label="Zarezerwuj"
-              @click="Register(visit)"
-              color="positive"
-              outline
-              no-caps
-              style="font-size: small; width: 50vw"
-            />
-          </div>
-        </q-expansion-item>
+          <q-btn
+            class="q-my-sm"
+            label="Zarezerwuj"
+            @click="Register(visit)"
+            color="positive"
+            outline
+            no-caps
+            style="font-size: small; width: 50vw"
+          />
+        </visit-expansion-item>
       </q-list>
     </div>
   </q-page>
@@ -112,6 +85,7 @@ import { ref } from 'vue'
 import { POST_QUEUES, POST_VISIT } from 'src/API/api'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import VisitExpansionItem from 'src/components/VisitExpansionItem.vue'
 
 const $q = useQuasar()
 const router = useRouter()

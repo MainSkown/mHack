@@ -1,9 +1,10 @@
-import { defineStore } from 'pinia';
-import { Visit } from './types';
+import { defineStore } from 'pinia'
+import { Visit } from './types'
+import { POST_GET_VISITS } from 'src/API/api'
 
 type VisitStoreState = {
-  queues: Visit[];
-};
+  queues: Visit[]
+}
 
 export const VisitStore = defineStore('VisitStore', {
   state: (): VisitStoreState => ({
@@ -11,14 +12,17 @@ export const VisitStore = defineStore('VisitStore', {
   }),
 
   actions: {
-    setup() {
-      // TODO: Implement axios getter
+    async setup() {
+      const res = await POST_GET_VISITS()
+      if (res !== '500') {
+        this.queues = res
+      }
     },
   },
 
   getters: {
     getQueues(): Visit[] {
-      return this.queues;
+      return this.queues
     },
   },
-});
+})

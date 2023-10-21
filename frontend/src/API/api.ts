@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { LocalStorage } from 'quasar'
 import { UserRaport, Visit } from 'src/stores/types'
 
 const port = 5000
@@ -35,9 +36,10 @@ export async function POST_VISIT(userVisit: Visit): Promise<'OK' | '500'> {
     method: 'POST',
     url: url + 'user/register',
     data: JSON.stringify({
-      ...userVisit,
       user_id: localStorage.getItem('user_token'),
+      ...userVisit,
     }),
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   })
     .then((response) => {
       if (response.status === 200) result = 'OK'
@@ -51,6 +53,21 @@ export async function POST_VISIT(userVisit: Visit): Promise<'OK' | '500'> {
 }
 
 // POST /user/registered
-export async function POST_GET_VISITS() {
-  await axios({})
+export async function POST_GET_VISITS(): Promise<Visit[] | '500'> {
+  let result: Visit[] | '500' = []
+  await axios({
+    method: 'POST',
+    url: url + 'user/registered',
+    data: JSON.stringify({ user_id: LocalStorage.getItem('user_token') }),
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+    .then((response) => {
+      console.log('Why', response.data)
+      result = response.data.queues
+    })
+    .catch(() => {
+      result = '500'
+    })
+
+  return result
 }

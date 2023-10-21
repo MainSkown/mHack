@@ -21,12 +21,26 @@
           style="width: 90%"
         />
         <h6 class="q-ma-none">Zarejestrowane wizyty</h6>
-        <q-list v-if="visitStore.getQueues.length > 0">
-          <q-item
+        <q-list
+          v-if="visitStore.getQueues.length > 0"
+          style="width: 80%"
+          class="q-gutter-y-sm"
+        >
+          <visit-expansion-item
             v-for="(visit, index) in visitStore.getQueues"
             v-bind:key="index"
-            class="text-center q-mt-sm bordered"
-          ></q-item>
+            :visit="visit"
+          >
+            <q-btn
+              class="q-my-sm"
+              label="Zrezygnuj"
+              @click="() => {}"
+              color="negative"
+              outline
+              no-caps
+              style="font-size: small; width: 50vw"
+            />
+          </visit-expansion-item>
         </q-list>
         <q-item
           class="text-center q-mt-sm"
@@ -49,9 +63,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import { VisitStore } from 'src/stores/visitStore'
+import VisitExpansionItem from 'src/components/VisitExpansionItem.vue'
 
 const visitStore = VisitStore()
 const router = useRouter()
+
+visitStore.setup()
 
 const buttons: {
   label: string
