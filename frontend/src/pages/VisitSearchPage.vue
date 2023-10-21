@@ -62,16 +62,109 @@
           v-for="visit in visits"
           :visit="visit"
           v-bind:key="visit.queue_id"
+          :show-register-date="false"
         >
           <q-btn
             class="q-my-sm"
             label="Zarezerwuj"
-            @click="Register(visit)"
+            @click="() => (showDialog = true)"
             color="positive"
             outline
             no-caps
             style="font-size: small; width: 50vw"
           />
+          <q-dialog v-model="showDialog" class="app-font text-center" no-focus>
+            <q-card style="width: 100vw">
+              <q-card-section class="bg-primary text-white text-bold">
+                <h6 class="q-ma-none">Wybierz datę rezerwacji</h6>
+              </q-card-section>
+              <q-card-section class="flex flex-center">
+                <div class="q-mt-md" style="max-width: 300px">
+                  <q-input filled v-model="visit.registration_date">
+                    <template v-slot:prepend>
+                      <q-icon name="event" class="cursor-pointer">
+                        <q-popup-proxy
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
+                        >
+                          <q-date
+                            v-model="visit.registration_date"
+                            mask="YYYY-MM-DD HH:mm"
+                            :options="
+                              (date) =>
+                                new Date(date) >= new Date(visit.visit_date)
+                            "
+                          >
+                            <div class="row items-center justify-end">
+                              <q-btn
+                                v-close-popup
+                                label="Close"
+                                color="primary"
+                                flat
+                              />
+                            </div>
+                          </q-date>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+
+                    <template v-slot:append>
+                      <q-icon name="access_time" class="cursor-pointer">
+                        <q-popup-proxy
+                          cover
+                          transition-show="scale"
+                          transition-hide="scale"
+                        >
+                          <q-time
+                            v-model="visit.registration_date"
+                            mask="YYYY-MM-DD HH:mm"
+                            format24h
+                            :options="(hr) => hr >= 6 && hr < 22"
+                          >
+                            <div class="row items-center justify-end">
+                              <q-btn
+                                v-close-popup
+                                label="Close"
+                                color="primary"
+                                flat
+                              />
+                            </div>
+                          </q-time>
+                        </q-popup-proxy>
+                      </q-icon>
+                    </template>
+                  </q-input>
+                </div>
+              </q-card-section>
+              <q-card-section class="flex justify-between no-wrap">
+                <q-btn
+                  label="Potwierdź"
+                  @click="
+                    () => {
+                      ;(showDialog = false), Register(visit)
+                    }
+                  "
+                  color="positive"
+                  outline
+                  no-caps
+                  style="font-size: small; width: 30vw"
+                  :disable="
+                    visit.registration_date === undefined ||
+                    visit.registration_date.length === 0
+                  "
+                />
+                <q-btn
+                  label="Anuluj"
+                  color="negative"
+                  outline
+                  no-caps
+                  style="font-size: small; width: 30vw"
+                  v-close-popup
+                />
+              </q-card-section>
+            </q-card>
+          </q-dialog>
         </visit-expansion-item>
       </q-list>
     </div>
@@ -90,6 +183,7 @@ import VisitExpansionItem from 'src/components/VisitExpansionItem.vue'
 const $q = useQuasar()
 const router = useRouter()
 const loading = ref<boolean>(false)
+const showDialog = ref<boolean>(false)
 
 const userRaport = ref<UserRaport>({
   specialist: '',

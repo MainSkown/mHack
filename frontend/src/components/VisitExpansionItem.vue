@@ -19,7 +19,11 @@
       <q-separator style="width: 90%" />
       <p class="q-my-xs">Numer telefonu: {{ visit.phone }}</p>
       <q-separator style="width: 90%" />
-      <p class="q-my-xs">
+      <p class="q-my-xs" v-if="showRegisterDate">
+        Data rejestracji:
+        {{ new Date(visit.registration_date).toLocaleString('pl') }}
+      </p>
+      <p class="q-my-xs" v-else>
         Wizyta wolna od:
         {{ new Date(visit.visit_date).toLocaleDateString('pl') }}
       </p>
@@ -33,5 +37,6 @@
 import { Visit } from '../stores/types'
 defineProps<{
   visit: Visit
+  showRegisterDate: boolean | undefined
 }>()
 </script>

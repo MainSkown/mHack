@@ -6,6 +6,7 @@ export type Visit = {
     street: string
   }
   visit_date: string
+  registration_date: string
   visit_name: string
   phone: string
 }
