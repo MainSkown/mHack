@@ -1,20 +1,25 @@
 import sqlite3
-
-
+import os
+db_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), 'databases', 'MLeKarz.db'))
 class SQLiteConnector:
+
+
     def __init__(self):
-        self.con = sqlite3.connect('databases/mLekarz.db')
+
+        self.con = sqlite3.connect(db_file_path)
         self.cur = self.con.cursor()
 
     def __del__(self):
         self.con.close()
 
     def get_queues(self, user_id):
+        
         sql = (f'SELECT queue_id, locations.place_name, locations.city, locations.street, visit_date, visit_name, phone\
                     FROM queues LEFT JOIN locations on locations.place_name = queues.place_name\
                     WHERE user_id = "{user_id}"')
-
+        print(sql)
         res = self.con.execute(sql)
+        
         visits = []
 
         for row in res:
@@ -55,8 +60,8 @@ class SQLiteConnector:
 
 
 # tests
-# connector = SQLiteConnector().get_queues('696969669')
-# print(connector)
+connector = SQLiteConnector().get_queues('696969669')
+print(connector)
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)
