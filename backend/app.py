@@ -1,14 +1,16 @@
 from flask import Flask, request, jsonify
 from api_translation import ApiTranslation
+from flask_cors import CORS
 
 app = Flask(__name__)
 
+cors = CORS(app)
 
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
 
-@app.route('/search', methods=['GET'])
+@app.route('/search', methods=['GET', 'POST'])
 
 def search():
 
