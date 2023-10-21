@@ -1,0 +1,21 @@
+CREATE TABLE locations (
+    place_name TEXT PRIMARY KEY,
+    city TEXT,
+    street TEXT
+);
+
+
+CREATE TABLE queues (
+    queue_id TEXT PRIMARY KEY,
+    user_id TEXT,
+    place_name TEXT,
+    visit_date TEXT,
+    visit_name TEXT,
+    phone TEXT,
+
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (place_name) REFERENCES locations(place_name)
+);
+
+
+
