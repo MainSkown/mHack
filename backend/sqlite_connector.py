@@ -15,10 +15,10 @@ class SQLiteConnector:
 
     def get_queues(self, user_id):
         
-        sql = (f'SELECT queue_id, locations.place_name, locations.city, locations.street, registration_date,\
-                    visit_date, visit_name, phone\
+        sql = (f'SELECT queue_id, locations.place_name, specialist, locations.city, locations.street,\
+                    registration_date, visit_date, visit_name, phone\
                     FROM queues LEFT JOIN locations on locations.place_name = queues.place_name\
-                    WHERE user_id = "{user_id}"')
+                    WHERE user_id="{user_id}"')
         res = self.con.execute(sql)
         
         visits = []
@@ -27,14 +27,15 @@ class SQLiteConnector:
             visits.append({
                 'queue_id': row[0],
                 'place_name': row[1],
+                'specialist': row[2],
                 'location': {
-                    'city': row[2],
-                    'street': row[3],
+                    'city': row[3],
+                    'street': row[4],
                 },
-                'registration_date': row[4],
-                'visit_date': row[5],
-                'visit_name': row[6],
-                'phone': row[7]
+                'registration_date': row[5],
+                'visit_date': row[6],
+                'visit_name': row[7],
+                'phone': row[8]
             })
 
         return {'queues': visits}, 200
@@ -45,11 +46,12 @@ class SQLiteConnector:
         self.con.commit()
         return {'message': 'Added location successfully'}, 201
 
-    def add_queue(self, queue_id, user_id, place_name, location, registration_date, visit_date, visit_name, phone):
+    def add_queue(self, queue_id, user_id, place_name, specialist, location,
+                  registration_date, visit_date, visit_name, phone):
         sql_queue_id_check = f'SELECT * FROM queues WHERE queue_id="{queue_id}"'
         queue_id_exists = len(self.con.execute(sql_queue_id_check).fetchall())
         if queue_id_exists:
-            return {'message': 'Conflict - visit with this queue_id already exists'}, 409
+            return {'message': 'Conflict - visit with this queue_id already exists', 'test': queue_id_exists}, 409
 
         city = location["city"]
         street = location["street"]
@@ -60,8 +62,8 @@ class SQLiteConnector:
             self.add_location(place_name, city, street)
 
         sql_queues = f"INSERT INTO queues \
-        (queue_id, user_id, place_name, registration_date, visit_date, visit_name, phone) \
-        VALUES ('{queue_id}', '{user_id}', '{place_name}', '{registration_date}', '{visit_date}',\
+        (queue_id, user_id, place_name, specialist, registration_date, visit_date, visit_name, phone) \
+        VALUES ('{queue_id}', '{user_id}', '{place_name}', '{specialist}', '{registration_date}', '{visit_date}',\
                                                                             '{visit_name}', '{phone}')"
         self.cur.execute(sql_queues)
         self.con.commit()
@@ -72,7 +74,7 @@ class SQLiteConnector:
 # tests
 # ***** ***
 # connector = SQLiteConnector().get_queues('696969669')
-# print(connector['queues'])
+# print(connector)
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)

@@ -70,7 +70,7 @@ class ApiTranslation:
         self.api_command = ("https://api.nfz.gov.pl/app-itl-api/queues?page=1&limit=25&format=json&case=1" +
                             self.province + self.specialist + self.forChildren + self.provider + self.place +
                             self.street + self.locality + "&api-version=1.3")
-        print(self.api_command)
+        # print(self.api_command)
 
     def getting_json(self):
 
