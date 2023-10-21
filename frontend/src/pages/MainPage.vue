@@ -52,29 +52,29 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
-import { VisitStore } from 'src/stores/visitStore';
+import { useRouter } from 'vue-router'
+import { VisitStore } from 'src/stores/visitStore'
 
-const visitStore = VisitStore();
-const router = useRouter();
+const visitStore = VisitStore()
+const router = useRouter()
 
 const buttons: {
-  label: string;
-  onClick: () => void;
-  color?: string;
+  label: string
+  onClick: () => void
+  color?: string
 }[] = [
   {
     label: 'Wyszukaj wizytę',
     onClick: () => {
-      router.push('/visit_search');
+      router.push('/visit_search')
     },
   },
   {
     label: 'Archiwum wizyt',
     onClick: () => {
-      router.push('/arhive');
+      router.push('/arhive')
     },
     color: 'grey-7',
   },
-];
+]
 </script>
