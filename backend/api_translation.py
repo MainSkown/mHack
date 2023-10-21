@@ -10,6 +10,7 @@ class ApiTranslation():
         self.specialist = ''
         self.province = '01'
         self.forChildren = 'false'
+        self.benefit = ''
         self.provider = ''
         self.place = ''
         self.street = ''
@@ -41,6 +42,8 @@ class ApiTranslation():
         if self.province: #must have
 
             self.province = "&province=" + self.province
+
+        self.specialist = "&benefit=" + self.specialist
         
         self.forChildren = "&benefitForChildren=" + str(self.forChildren) #must have
 
@@ -63,13 +66,12 @@ class ApiTranslation():
 
     def generating_api_command(self):
         
-        self.api_command = "https://api.nfz.gov.pl/app-itl-api/queues?page=1&limit=25&format=json&case=1" + self.province + self.forChildren + self.provider + self.place + self.street + self.locality + "&api-version=1.3"
+        self.api_command = "https://api.nfz.gov.pl/app-itl-api/queues?page=1&limit=25&format=json&case=1" + self.province + self.specialist + self.forChildren + self.provider + self.place + self.street + self.locality + "&api-version=1.3"
         print(self.api_command)
 
 
     def getting_json(self):
-
-
+        print(self.provider, self.place)
         try:
 
             response = requests.get(self.api_command)
@@ -147,7 +149,7 @@ class ApiTranslation():
 
 
 
-# d = {"specialist": "",
+# d = {"specialist": "dermatolog",
 #     "province": "01",
 #     "forChildren": False,
 #     "provider": "",
@@ -161,6 +163,7 @@ class ApiTranslation():
 # c.get_request(d)
 # c.constructing_filters()
 # c.generating_api_command()
-# print(c.getting_json())
+# s=c.getting_json()
+# print(s)
 
 
