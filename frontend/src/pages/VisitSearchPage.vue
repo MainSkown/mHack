@@ -1,7 +1,11 @@
 <template>
   <q-page class="column q-gutter-y-xs items-center">
     <div class="text-center" style="min-width: 80%">
-      <q-select v-model="userRaport.specialist" label="Wybierz specjalistę" />
+      <q-select
+        v-model="userRaport.specialist"
+        label="Wybierz specjalistę"
+        :options="specialists"
+      />
     </div>
 
     <div style="width: 80%">
@@ -87,5 +91,22 @@ const voivodeship: { label: string; value: string }[] = [
   { label: 'warmińsko-mazurskie', value: '14' },
   { label: 'wielkopolskie', value: '15' },
   { label: 'zachodniopomorskie', value: '16' },
+]
+
+const specialists: string[] = [
+  'Chirurg',
+  'Dermatolog',
+  'Ginekolog',
+  'Immunolog',
+  'Kardiolog',
+  'Nefrolog',
+  'Neonatolog',
+  'Neurolog',
+  'Onkolog',
+  'Patolog',
+  'Pulmonolog',
+  'Reumatolog',
+  'Urolog',
+  'Wenerolog',
 ]
 </script>
