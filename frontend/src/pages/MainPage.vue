@@ -30,6 +30,7 @@
             v-for="(visit, index) in visitStore.getQueues"
             v-bind:key="index"
             :visit="visit"
+            :show-register-date="true"
           >
             <q-btn
               class="q-my-sm"
