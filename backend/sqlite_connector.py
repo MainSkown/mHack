@@ -46,7 +46,7 @@ class SQLiteConnector:
         if not location_exists:
             self.add_location(place_name, city, street)
 
-        sql_queues = f"INSERT INTO queues VALUES ('{user_id}', '{queue_id}', '{place_name}', '{visit_date}',\
+        sql_queues = f"INSERT INTO queues VALUES ('{queue_id}', '{user_id}', '{place_name}', '{visit_date}',\
                                                                                     '{visit_name}', '{phone}')"
         self.cur.execute(sql_queues)
         self.con.commit()
