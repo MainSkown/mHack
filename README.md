@@ -61,13 +61,21 @@ visit_name: string;
 phone: string;
 ```
 
-### POST /register
+### POST /user/register
 
 #### Request:
 
 ```js
 user_id: string;
 queue_id: string;
+  location: {
+    place_name: string;
+    city: string;
+    street: string;
+  }
+  visit_date: Date;
+  visit_name: string;
+  phone: string;
 ```
 
 #### Response:
@@ -82,7 +90,7 @@ OK
 benefits: string[]
 ```
 
-### GET /user/registered
+### POST /user/registered
 
 #### Request:
 
