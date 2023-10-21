@@ -15,4 +15,11 @@
   </q-layout>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { v4 } from 'uuid'
+
+if (localStorage.getItem('user_token') == undefined) {
+  console.log('Eh')
+  localStorage.setItem('user_token', v4())
+}
+</script>

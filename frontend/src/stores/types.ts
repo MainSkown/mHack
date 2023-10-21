@@ -4,10 +4,8 @@ export type Visit = {
   location: {
     city: string
     street: string
-    aprt_num: string
-    post_code: string
   }
-  visit_date: Date
+  visit_date: string
   visit_name: string
   phone: string
 }
@@ -15,11 +13,11 @@ export type Visit = {
 export type UserRaport = {
   specialist: string
   province: string
-  forChildren?: boolean
-  provider?: string
-  place?: string
-  street?: string
-  locality?: string
-  disabled?: boolean
-  elevator?: boolean
+  forChildren: boolean
+  provider: string
+  place: string
+  street: string
+  locality: string
+  disabled: boolean
+  elevator: boolean
 }

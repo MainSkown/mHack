@@ -25,12 +25,7 @@
           <q-item
             v-for="(visit, index) in visitStore.getQueues"
             v-bind:key="index"
-            class="text-center q-mt-sm"
-            style="
-              border: 1px grey;
-              border-style: solid;
-              border-radius: 5px 5px 5px 5px;
-            "
+            class="text-center q-mt-sm bordered"
           ></q-item>
         </q-list>
         <q-item
