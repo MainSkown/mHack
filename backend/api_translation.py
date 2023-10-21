@@ -2,11 +2,14 @@ import requests
 import urllib.parse
 
 
+class ApiTranslation():
+
 class ApiTranslation:
 
     def __init__(self) -> None:
         
         self.api_command = ''
+        self.search_radius = 0
         self.specialist = ''
         self.province = '01'
         self.forChildren = 'false'
@@ -17,7 +20,7 @@ class ApiTranslation:
         self.locality = ''
         self.disabled = ''
         self.elevator = ''
-    
+        self.returned_specialist = ''
     def get_request(self, request: dict):
 
         self.specialist = request.get('specialist', '')
@@ -25,6 +28,7 @@ class ApiTranslation:
         self.forChildren = request.get('forChildren', 'false')
         self.provider = request.get('provider', '')
         self.place = request.get('place', '')
+        self.search_radius = request.get('search_radius', 0)
         self.street = request.get('street', '')
         self.locality = request.get('locality', '')
         self.disabled = request.get('disabled', '')
@@ -37,8 +41,8 @@ class ApiTranslation:
         return urllib.parse.quote(to_parse)
 
     def constructing_filters(self):
-
-        if self.province:  # must have
+        self.returned_specialist = self.specialist
+        if self.province: #must have
 
             self.province = "&province=" + self.province
 
@@ -70,7 +74,7 @@ class ApiTranslation:
         print(self.api_command)
 
     def getting_json(self):
-        print(self.provider, self.place)
+
         try:
 
             response = requests.get(self.api_command)
@@ -91,6 +95,7 @@ class ApiTranslation:
         except Exception as e:
             print(f"An error occurred: {e}")
 
+
     def response_generator(self, json_data: list):
 
         data_list = []
@@ -103,7 +108,8 @@ class ApiTranslation:
                                     }
             temp_data_template = {
                                 'queue_id': None,
-                                'place_name': None,
+                                'specialist': None,
+                                'place_name' : None,
                                 'location': temp_location_template,
                                 'visit_date': None,
                                 'visit_name': None,
@@ -113,9 +119,10 @@ class ApiTranslation:
 
                 if record['attributes']['ramp'] == "Y":
 
+                    
                     temp_location_template['city'] = record['attributes']['locality']
                     temp_location_template['street'] = record['attributes']['address']
-
+                    temp_data_template['specialist'] = self.returned_specialist
                     temp_data_template['queue_id'] = record['id']
                     temp_data_template['place_name'] = record['attributes']['provider']
                     temp_data_template['location'] = temp_location_template
@@ -132,6 +139,7 @@ class ApiTranslation:
                 temp_location_template['city'] = record['attributes']['locality']
                 temp_location_template['street'] = record['attributes']['address']
 
+                temp_data_template['specialist'] = self.returned_specialist
                 temp_data_template['queue_id'] = record['id']
                 temp_data_template['place_name'] = record['attributes']['provider']
                 temp_data_template['location'] = temp_location_template
@@ -144,21 +152,22 @@ class ApiTranslation:
         return data_list
 
 
-# d = {"specialist": "dermatolog",
-#     "province": "01",
-#     "forChildren": False,
-#     "provider": "",
-#     "place": "",
-#     "street": "",
-#     "locality": "Oława",
-#     "disabled": "",
-#     "elevator": ""}
 
-# c = ApiTranslation()
-# c.get_request(d)
-# c.constructing_filters()
-# c.generating_api_command()
-# s=c.getting_json()
-# print(s)
+d = {"specialist": "Dermatolog",
+    "province": "01",
+    "forChildren": False,
+    "provider": "",
+    "place": "",
+    "street": "",
+    "locality": "Wrocław",
+    "disabled": "",
+    "elevator": ""}
+
+c = ApiTranslation()
+c.get_request(d)
+c.constructing_filters()
+c.generating_api_command()
+s=c.getting_json()
+print(s)
 
 
