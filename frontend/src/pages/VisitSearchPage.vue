@@ -24,6 +24,16 @@
         <q-separator />
         <div class="column q-gutter-y-xs">
           <q-input v-model="userRaport.locality" label="Wpisz miasto" />
+          <div>
+            <p class="q-ma-none">Odległość od miasta w kilometrach:</p>
+            <q-slider
+              v-model="userRaport.search_radius"
+              :markers="10"
+              :min="0"
+              :max="50"
+              marker-labels
+            />
+          </div>
           <q-input v-model="userRaport.street" label="Ulica jednostki" />
           <q-input v-model="userRaport.place" label="Nazwa przychodni" />
           <q-separator class="q-my-md" />
@@ -195,6 +205,7 @@ const userRaport = ref<UserRaport>({
   disabled: false,
   provider: '',
   locality: '',
+  search_radius: 0,
 })
 
 const visits = ref<Visit[]>([])
