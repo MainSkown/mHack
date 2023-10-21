@@ -29,3 +29,26 @@ class SQLiteConnector:
             })
 
         return {'status': 200, 'queues': visits}
+
+    def add_location(self, place_name, city, street):
+        sql = f"INSERT INTO locations VALUES ('{place_name}', '{city}', '{street}')"
+        self.cur.execute(sql)
+        self.con.commit()
+        return {'status': 201, 'message': 'Added location successfully'}
+
+    def add_queue(self, queue_id, user_id, location, visit_date, visit_name, phone):
+        place_name = location["place_name"]
+        city = location["city"]
+        street = location["street"]
+
+        sql_location_exists = f'SELECT * FROM locations WHERE place_name = "{place_name}"'
+        location_exists = len(self.cur.execute(sql_location_exists).fetchall())
+        if not location_exists:
+            self.add_location(place_name, city, street)
+
+        sql_queues = f"INSERT INTO queues VALUES ('{user_id}', '{queue_id}', '{place_name}', '{visit_date}',\
+                                                                                    '{visit_name}', '{phone}')"
+        self.cur.execute(sql_queues)
+        self.con.commit()
+
+        return {'status': 201, 'message': 'Registered Successfully'}
