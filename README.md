@@ -106,6 +106,7 @@ queues: {
     city: string;
     street: string;
   }
+  registration_date: string;
   visit_date: Date;
   visit_name: string;
   phone: string;
