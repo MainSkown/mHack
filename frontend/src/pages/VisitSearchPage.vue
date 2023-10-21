@@ -91,6 +91,10 @@
                           <q-date
                             v-model="visit.registration_date"
                             mask="YYYY-MM-DD HH:mm"
+                            :options="
+                              (date) =>
+                                new Date(date) >= new Date(visit.visit_date)
+                            "
                           >
                             <div class="row items-center justify-end">
                               <q-btn
@@ -116,6 +120,7 @@
                             v-model="visit.registration_date"
                             mask="YYYY-MM-DD HH:mm"
                             format24h
+                            :options="(hr) => hr >= 6 && hr < 22"
                           >
                             <div class="row items-center justify-end">
                               <q-btn
