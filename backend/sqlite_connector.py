@@ -46,6 +46,11 @@ class SQLiteConnector:
         return {'status': 201, 'message': 'Added location successfully'}
 
     def add_queue(self, queue_id, user_id, place_name, location, registration_date, visit_date, visit_name, phone):
+        sql_queue_id_check = f'SELECT * FROM queues WHERE queue_id="{queue_id}"'
+        queue_id_exists = len(self.con.execute(sql_queue_id_check).fetchall())
+        if queue_id_exists:
+            return {'status': 409, 'message': 'Conflict - visit with this queue_id already exists'}
+
         city = location["city"]
         street = location["street"]
 
@@ -65,8 +70,9 @@ class SQLiteConnector:
 
 
 # tests
-connector = SQLiteConnector().get_queues('696969669')
-print(connector['queues'])
+# ***** ***
+# connector = SQLiteConnector().get_queues('696969669')
+# print(connector['queues'])
 #
 # connector = SQLiteConnector().get_queues('nie_istnieje')
 # print(connector)
