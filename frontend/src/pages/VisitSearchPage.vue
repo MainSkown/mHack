@@ -132,6 +132,14 @@ const userRaport = ref<UserRaport>({
 const visits = ref<Visit[]>([])
 
 async function Search() {
+  if (userRaport.value.specialist === '') {
+    $q.notify('Pozycja specjalisty nie może być pusta')
+    return
+  }
+  if (userRaport.value.province === '') {
+    $q.notify('Województwo nie może być puste')
+  }
+
   visits.value = []
   loading.value = true
   await POST_QUEUES(userRaport.value).then((result) => {
@@ -209,6 +217,7 @@ const specialists: string[] = [
   'Patolog',
   'Pulmonolog',
   'Reumatolog',
+  'Stomatolog',
   'Urolog',
   'Wenerolog',
 ]
