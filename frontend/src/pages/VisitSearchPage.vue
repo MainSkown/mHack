@@ -55,11 +55,19 @@
     />
     <q-spinner class="q-mt-md" color="primary" size="3em" v-if="loading" />
     <!--Show visit cards-->
-    <div v-if="visits.length > 0" style="width: 80%">
-      <q-separator class="q-mt-sm q-mb-md" color="primary" />
+    <div
+      class="column items-center"
+      v-if="visits.length > 0"
+      style="width: 80%"
+    >
+      <q-separator
+        class="shadow-3 q-mt-sm q-mb-md"
+        color="primary"
+        style="width: 100%"
+      />
       <q-list class="q-gutter-y-xs">
         <visit-expansion-item
-          v-for="visit in visits"
+          v-for="(visit, index) in visits"
           :visit="visit"
           v-bind:key="visit.queue_id"
           :show-register-date="false"
@@ -67,7 +75,11 @@
           <q-btn
             class="q-my-sm"
             label="Zarezerwuj"
-            @click="() => (showDialog = true)"
+            @click="
+              () => {
+                ;(showDialog = true), (dialogID = index)
+              }
+            "
             color="positive"
             outline
             no-caps
@@ -80,7 +92,7 @@
               </q-card-section>
               <q-card-section class="flex flex-center">
                 <div class="q-mt-md" style="max-width: 300px">
-                  <q-input filled v-model="visit.registration_date">
+                  <q-input filled v-model="visits[dialogID].registration_date">
                     <template v-slot:prepend>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy
@@ -89,11 +101,12 @@
                           transition-hide="scale"
                         >
                           <q-date
-                            v-model="visit.registration_date"
+                            v-model="visits[dialogID].registration_date"
                             mask="YYYY-MM-DD HH:mm"
                             :options="
                               (date) =>
-                                new Date(date) >= new Date(visit.visit_date)
+                                new Date(date) >=
+                                new Date(visits[dialogID].visit_date)
                             "
                           >
                             <div class="row items-center justify-end">
@@ -117,7 +130,7 @@
                           transition-hide="scale"
                         >
                           <q-time
-                            v-model="visit.registration_date"
+                            v-model="visits[dialogID].registration_date"
                             mask="YYYY-MM-DD HH:mm"
                             format24h
                             :options="(hr) => hr >= 6 && hr < 22"
@@ -142,7 +155,7 @@
                   label="Potwierdź"
                   @click="
                     () => {
-                      ;(showDialog = false), Register(visit)
+                      ;(showDialog = false), Register(visits[dialogID])
                     }
                   "
                   color="positive"
@@ -150,8 +163,8 @@
                   no-caps
                   style="font-size: small; width: 30vw"
                   :disable="
-                    visit.registration_date === undefined ||
-                    visit.registration_date.length === 0
+                    visits[dialogID].registration_date === undefined ||
+                    visits[dialogID].registration_date.length === 0
                   "
                 />
                 <q-btn
@@ -184,6 +197,7 @@ const $q = useQuasar()
 const router = useRouter()
 const loading = ref<boolean>(false)
 const showDialog = ref<boolean>(false)
+const dialogID = ref<number>(0)
 
 const userRaport = ref<UserRaport>({
   specialist: '',
