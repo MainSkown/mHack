@@ -22,7 +22,7 @@
         <q-btn
           class="q-my-sm"
           label="Usuń"
-          @click="() => {}"
+          @click="visitStore.DeleteQueue(visit.queue_id)"
           color="negative"
           outline
           no-caps

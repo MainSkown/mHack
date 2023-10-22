@@ -62,8 +62,30 @@ export async function POST_GET_VISITS(): Promise<Visit[] | '500'> {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   })
     .then((response) => {
-      console.log('Why', response.data)
       result = response.data.queues
+    })
+    .catch(() => {
+      result = '500'
+    })
+
+  return result
+}
+
+// PUT /user/delete
+export async function PUT_DELETE(queue_id: string): Promise<'OK' | '500'> {
+  let result: 'OK' | '500' = '500'
+  await axios({
+    method: 'PUT',
+    url: url + 'user/delete',
+    data: JSON.stringify({
+      user_id: LocalStorage.getItem('user_token'),
+      queue_id: queue_id,
+    }),
+    headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status < 300) result = 'OK'
+      else result = '500'
     })
     .catch(() => {
       result = '500'
