@@ -83,13 +83,13 @@ class ApiTranslation:
                 json_data = response.json()
                 json_data = json_data['data']
 
-                return self.response_generator(json_data), 200
+                return self.response_generator(json_data)
 
             else:
                 
                 return {
                         "error": "Internal Server Error"
-                        }, 503
+                        }, response.status_code
         
         except Exception as e:
             print(f"An error occurred: {e}")
