@@ -19,9 +19,10 @@ def search():
 
     full_dataset = []
     radius_search = GeoLocation()
+    cities = radius_search.collect_data(radius_search.db_file_path)
     request_data = request.get_json()
-    nearby_cities = radius_search.find_nearby_cities(request_data['locality'].lower(), request_data['search_radius'])
-    # print(nearby_cities)
+    nearby_cities = radius_search.find_nearby_cities(request_data['locality'].lower(), request_data['search_radius'], cities)
+
     search = ApiTranslation()
     search.get_request(request_data)
 
