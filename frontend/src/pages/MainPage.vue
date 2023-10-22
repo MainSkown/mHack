@@ -84,7 +84,6 @@
 import { useRouter } from 'vue-router'
 import { VisitStore } from 'src/stores/visitStore'
 import VisitExpansionItem from 'src/components/VisitExpansionItem.vue'
-import { ref } from 'vue'
 import { beforeVisit } from 'src/stores/beforeVisit'
 
 const visitStore = VisitStore()
