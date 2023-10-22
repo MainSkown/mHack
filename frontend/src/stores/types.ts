@@ -9,7 +9,7 @@ export type Visit = {
   registration_date: string
   visit_name: string
   phone: string
-  spiecialist: string
+  specialist: string
 }
 
 export type UserRaport = {

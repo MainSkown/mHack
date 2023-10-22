@@ -45,7 +45,7 @@
                   transition-hide="flip-down"
                 >
                   <q-banner class="bg-white text-black">
-                    {{ beforeVisit[visit.spiecialist] }}
+                    {{ beforeVisit[visit.specialist] }}
                   </q-banner>
                 </q-popup-proxy></q-icon
               >

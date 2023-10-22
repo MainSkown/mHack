@@ -155,7 +155,7 @@
                   label="Potwierdź"
                   @click="
                     () => {
-                      ;(showDialog = false), Register(visit)
+                      ;(showDialog = false), Register(visits[dialogID])
                     }
                   "
                   color="positive"
