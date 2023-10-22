@@ -32,6 +32,7 @@
               :min="0"
               :max="50"
               marker-labels
+              :disable="!(userRaport.locality.length > 0)"
             />
           </div>
           <q-input v-model="userRaport.street" label="Ulica jednostki" />
@@ -312,6 +313,6 @@ const specialists: string[] = [
   'Reumatolog',
   'Stomatolog',
   'Urolog',
-  'Wenerolog',
+  //'Wenerolog',
 ]
 </script>
