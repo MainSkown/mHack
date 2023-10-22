@@ -41,8 +41,6 @@ def search():
             search.generating_api_command()
             
             full_dataset += search.getting_json()
-            
-            return full_dataset
 
     return full_dataset
 
