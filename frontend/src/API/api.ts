@@ -42,7 +42,7 @@ export async function POST_VISIT(userVisit: Visit): Promise<'OK' | '500'> {
     headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
   })
     .then((response) => {
-      if (response.status === 200) result = 'OK'
+      if (response.status >= 200 && response.status < 300) result = 'OK'
       else result = '500'
     })
     .catch(() => {
