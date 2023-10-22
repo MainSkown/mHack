@@ -9,6 +9,7 @@ CREATE TABLE queues (
     queue_id TEXT PRIMARY KEY,
     user_id TEXT,
     place_name TEXT,
+    specialist TEXT,
     registration_date TEXT,
     visit_date TEXT,
     visit_name TEXT,

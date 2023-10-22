@@ -70,6 +70,12 @@ class SQLiteConnector:
 
         return {'message': 'Registered Successfully'}, 201
 
+    def remove_queue(self, queue_id, user_id):
+        sql = f'DELETE FROM queues WHERE queue_id="{queue_id}" AND user_id="{user_id}"'
+        self.cur.execute(sql)
+        self.con.commit()
+        return {'message': 'No content'}, 204
+
 
 # tests
 # ***** ***

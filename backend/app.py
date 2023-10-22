@@ -53,5 +53,19 @@ def user_register():
     return status
 
 
+@app.route('/user/delete', methods=['PUT'])
+def delete_visit():
+    save_request_data = request.get_json()
+    user_database_conn = SQLiteConnector()
+    try:
+        queue_id = save_request_data['queue_id']
+        user_id = save_request_data['user_id']
+
+        status = user_database_conn.remove_queue(queue_id, user_id)
+        return status
+    except:
+        return {'message': 'Conflict'}, 409
+
+
 if __name__ == '__main__':
     app.run()
