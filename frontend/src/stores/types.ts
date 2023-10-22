@@ -22,4 +22,5 @@ export type UserRaport = {
   locality: string
   disabled: boolean
   elevator: boolean
+  search_radius: number
 }
