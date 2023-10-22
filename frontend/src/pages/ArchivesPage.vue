@@ -1,7 +1,7 @@
 <template>
   <q-page class="column items-center q-mt-md">
     <h6 class="q-ma-none">Zarchiwizowane wizyty</h6>
-    <q-separator color="primary" style="width: 90%" />
+    <q-separator class="shadow-3 q-my-md" color="primary" style="width: 90%" />
     <div
       v-if="
         visitStore.getQueues.filter(

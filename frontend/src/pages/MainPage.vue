@@ -17,7 +17,6 @@
         <q-separator
           class="shadow-3 q-my-md"
           color="primary"
-          inset
           style="width: 90%"
         />
         <h6 class="q-ma-none">Zarejestrowane wizyty</h6>
