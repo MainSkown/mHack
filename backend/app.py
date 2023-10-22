@@ -17,31 +17,33 @@ def hello_world():  # put application's code here
 @app.route('/search', methods=['GET', 'POST'])
 def search():
 
+    full_dataset = []
     radius_search = GeoLocation()
-    cities = radius_search.collect_data(radius_search.db_file_path)
-
-
-    
     request_data = request.get_json()
-    nearby_cities = radius_search.find_nearby_cities(request_data['locality'].lower(), 30, cities)
-
+    nearby_cities = radius_search.find_nearby_cities(request_data['locality'].lower(), request_data['search_radius'])
+    # print(nearby_cities)
     search = ApiTranslation()
     search.get_request(request_data)
 
     search.constructing_filters()
     search.generating_api_command()
-    full_dataset = search.getting_json()
+    full_dataset += search.getting_json()
 
     if nearby_cities:
 
         for city in nearby_cities:
 
             request_data['locality'] = city
+
             search.get_request(request_data)
             search.constructing_filters()
             search.generating_api_command()
-            full_dataset += search.getting_json()
-    
+            # print(search.api_command)
+            try:
+                full_dataset += search.getting_json()
+                # print(full_dataset)
+            except:
+                return full_dataset
 
     return full_dataset
 
