@@ -313,6 +313,6 @@ const specialists: string[] = [
   'Reumatolog',
   'Stomatolog',
   'Urolog',
-  'Wenerolog',
+  //'Wenerolog',
 ]
 </script>
