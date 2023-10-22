@@ -115,3 +115,12 @@ queues: {
 }
 [];
 ```
+
+### PUT /user/delete
+
+#### Request:
+
+```js
+user_id: string;
+queue_id: string;
+```
