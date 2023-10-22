@@ -39,12 +39,10 @@ def search():
             search.get_request(request_data)
             search.constructing_filters()
             search.generating_api_command()
-            # print(search.api_command)
-            try:
-                full_dataset += search.getting_json()
-                # print(full_dataset)
-            except:
-                return full_dataset
+            
+            full_dataset += search.getting_json()[0]
+            
+            return full_dataset
 
     return full_dataset
 
