@@ -40,7 +40,7 @@ def search():
             search.constructing_filters()
             search.generating_api_command()
             
-            full_dataset += search.getting_json()[0]
+            full_dataset += search.getting_json()
             
             return full_dataset
 
